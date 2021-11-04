@@ -107,7 +107,7 @@ class SalaryTable:
         df = pd.read_html(str(table_tags))[0]
         formatted_table = self.format_table(df)
         with ThreadPoolExecutor() as executor:
-            result = executor.map(self.get_remit_soup, formatted_table["黏存單號碼"])
+            result = executor.map(self.get_remit_date, formatted_table["黏存單號碼"])
         formatted_table["入帳日期"] = list(result)
         return formatted_table
 
