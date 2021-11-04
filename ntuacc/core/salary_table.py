@@ -11,9 +11,9 @@ HEADERS = {"user-agent": UserAgent().google}
 
 
 @dataclass
-class SalaryData:
+class SalaryTable:
     """
-    The SalaryData object extracts the salary dataframe.
+    The SalaryTable object extracts the salary dataframe.
     """
 
     query: dict
