@@ -6,47 +6,20 @@ Downloading the project details as a table from the website [National Taiwan Uni
 
 ## **Documentation**
 
-### 1. Set your `User-Agent` in `.ntuacc/ntuacc.py`:
-```python
-    ...
-
-    def __post_init__(self):
-        self.query = {
-            "campno": "m",
-            "idtype": "3",
-            "bossid": self.bossid,
-            "assid": self.assid,
-            "asspwd": self.asspwd,
-        }
-
-        self.headers = {
-            "User-Agent": ""         # set your User-Agent here
-        }
-    ...
-```
-
-### 2. Import the package.
+### 1. Import the package.
 
 ``` python
 from ntuacc import NTUACC
-```
-If you are working on Jupyter Notebook, you need to add two additional code lines (before or after importing the `NTUACC` package):
-
-``` python
-import nest_asyncio
-nest_asyncio.apply()
-```
-Since `NTUACC` is built with Python asynchronous frameworks, it cannot run properly on Jupyter Notebook due to the fact that Jupyter [(IPython ≥ 7.0)](https://blog.jupyter.org/ipython-7-0-async-repl-a35ce050f7f7) is already running an event loop. Visit [this question](https://stackoverflow.com/questions/56154176/runtimeerror-asyncio-run-cannot-be-called-from-a-running-event-loop) asked in StackOverflow for further details.
-
+``` 
  
-### 3. Fill in and instantiate `NTUACC` class: 
+### 2. Fill in and instantiate `NTUACC` class: 
 * `bossid`: the id/account of your professor, doctoral advisor or boss
 * `assid`: the id/account of project assistant 
 * `asspwd`: the password of project assistant 
 * `project_year`: the project year you want to download
 
 ``` python
-salary_table = NTUACC("xxx", 'xxx', 'xxx', project_year=110)
+salary_table = NTUACC("xxx", 'xxx', 'xxx', project_year=2021)
 ```
 
 ### 3. Download the table: 
