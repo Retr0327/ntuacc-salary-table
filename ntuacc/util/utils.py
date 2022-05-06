@@ -14,23 +14,23 @@ def set_project_year(project_year: int):
 def download_html(
     method: str,
     session: Session,
-    project_id: str,
+    project_id: str = None,
     payload: dict = None,
 ) -> BeautifulSoup:
     HEADERS = {"user-agent": UserAgent().google}
 
-    method_factories = {
-        "post": session.post(
+    if method == "post":
+        html_body = session.post(
             "https://ntuacc.cc.ntu.edu.tw/acc/apply/ProjectDetail.asp",
             data=payload,
             headers=HEADERS,
-        ),
-        "get": session.get(
+        )
+
+    else:
+        html_body = session.get(
             f"https://ntuacc.cc.ntu.edu.tw/trace/trace.asp?target=self&APPCODE={project_id}&VYEAR={project_id[:3]}",
             headers=HEADERS,
-        ),
-    }
+        )
 
-    html_body = method_factories[method]
     html_body.encoding = "big5"
     return BeautifulSoup(html_body.text, "lxml")
