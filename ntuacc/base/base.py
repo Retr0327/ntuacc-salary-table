@@ -1,3 +1,4 @@
+from bs4 import BeautifulSoup
 from abc import ABC, abstractmethod
 
 
@@ -5,6 +6,10 @@ class Table(ABC):
     """
     The Table object extracts the data from html table tags.
     """
+
+    @abstractmethod
+    def download_soup(self) -> BeautifulSoup:
+        pass
 
     @abstractmethod
     def extract_data(self):
