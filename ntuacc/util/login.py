@@ -31,10 +31,8 @@ def login(payload: dict) -> bool:
 
         return True
 
-    except requests.ConnectionError:
+    except requests.ConnectionError as error:
         print("Connection error. Make sure you are connected to Internet.")
-        return False
 
     except requests.HTTPError:
         print("Cannot request!")
-        return False
