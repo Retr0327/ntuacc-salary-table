@@ -1,3 +1,3 @@
-from .base import Table
+from .base import SalaryData
 
-__all__ = ["Table"]
+__all__ = ["SalaryData"]
