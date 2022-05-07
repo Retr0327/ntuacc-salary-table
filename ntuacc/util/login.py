@@ -11,21 +11,30 @@ def login(payload: dict) -> bool:
     Returns:
         a boolean
     """
-    session = requests.session()
-    response = session.post(
-        "https://ntuacc.cc.ntu.edu.tw/acc/secure.asp",
-        data=payload,
-        headers=HEADERS,
-    )
+    try:
+        session = requests.session()
+        response = session.post(
+            "https://ntuacc.cc.ntu.edu.tw/acc/secure.asp",
+            data=payload,
+            headers=HEADERS,
+        )
 
-    status = response.status_code
+        status = response.status_code
 
-    if status != requests.codes.ok:
-        raise requests.HTTPError
+        if status != requests.codes.ok:
+            raise requests.HTTPError
 
-    session_store["session"] = session
+        session_store["session"] = session
 
-    if not session_store["session"]:
+        if not session_store["session"]:
+            return False
+
+        return True
+
+    except requests.ConnectionError:
+        print("Connection error. Make sure you are connected to Internet.")
         return False
 
-    return True
+    except requests.HTTPError:
+        print("Cannot request!")
+        return False
