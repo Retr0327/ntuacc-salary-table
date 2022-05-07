@@ -1,4 +1,5 @@
 import pandas as pd
+from bs4 import ResultSet
 from ...base import SalaryData
 from dataclasses import dataclass
 
@@ -9,7 +10,7 @@ class ProjectTable:
     The ProjectTable object extracts the project dataframe.
     """
 
-    table_tag: SalaryData
+    table_tag: ResultSet
 
     def format_table(self, data_frame: pd.DataFrame):
         """The format_table method formats the DataFrame
