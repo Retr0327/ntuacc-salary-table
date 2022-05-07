@@ -1,25 +1,31 @@
 import requests
-from fake_useragent import UserAgent
-
-HEADERS = {"user-agent": UserAgent().google}
+from ..store import HEADERS, session_store
 
 
-def login(payload: dict) -> requests.Session:
-    try:
-        session = requests.session()
-        response = session.post(
-            "https://ntuacc.cc.ntu.edu.tw/acc/secure.asp",
-            data=payload,
-            headers=HEADERS,
-        )
+def login(payload: dict) -> bool:
+    """The login function makes sure the user is logged in.
 
-        status = response.status_code
+    Args:
+        payload (dict): a dictionary object to send in the body of the request
 
-        if status != requests.codes.ok:
-            raise requests.HTTPError
+    Returns:
+        a boolean
+    """
+    session = requests.session()
+    response = session.post(
+        "https://ntuacc.cc.ntu.edu.tw/acc/secure.asp",
+        data=payload,
+        headers=HEADERS,
+    )
 
-        return session
-    except requests.ConnectionError:
-        return "Connection error. Make sure you are connected to Internet."
-    except requests.HTTPError:
-        return "Cannot request!"
+    status = response.status_code
+
+    if status != requests.codes.ok:
+        raise requests.HTTPError
+
+    session_store["session"] = session
+
+    if not session_store["session"]:
+        return False
+
+    return True
