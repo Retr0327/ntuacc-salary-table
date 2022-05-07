@@ -1,9 +1,16 @@
-from requests import Session
-from bs4 import BeautifulSoup
-from fake_useragent import UserAgent
+import pandas as pd
 
 
-def set_project_year(project_year: int):
+def set_project_year(project_year: int) -> int:
+    """The set_project_year function calculates the year in Minguo calendar.
+
+    Args:
+        project_year (int): the given project year, which can be either
+                            Minguo year or Gregorian year.
+
+    Returns:
+        a int
+    """
     if (len(str(project_year))) == 4:
         project_year -= 1911
         return project_year
@@ -11,26 +18,19 @@ def set_project_year(project_year: int):
     return project_year
 
 
-def download_html(
-    method: str,
-    session: Session,
-    project_id: str = None,
-    payload: dict = None,
-) -> BeautifulSoup:
-    HEADERS = {"user-agent": UserAgent().google}
+def format_table(table: pd.DataFrame) -> pd.DataFrame:
+    """The format_table function formats the DataFrame
 
-    if method == "post":
-        html_body = session.post(
-            "https://ntuacc.cc.ntu.edu.tw/acc/apply/ProjectDetail.asp",
-            data=payload,
-            headers=HEADERS,
-        )
+    Args:
+        table (pd.DataFrame): the DataFrame object
 
-    else:
-        html_body = session.get(
-            f"https://ntuacc.cc.ntu.edu.tw/trace/trace.asp?target=self&APPCODE={project_id}&VYEAR={project_id[:3]}",
-            headers=HEADERS,
-        )
+    Returns:
+        a pd.DataFrame object
+    """
 
-    html_body.encoding = "big5"
-    return BeautifulSoup(html_body.text, "lxml")
+    table = table.drop([0, 6, 8, 11], axis=1)
+    new_header = table.iloc[0]
+    table = table[1:]
+    table.columns = new_header
+    table = table.rename(columns={"申請日請": "申請日期"})
+    return table
