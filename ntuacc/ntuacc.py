@@ -36,8 +36,10 @@ class NTUACC:
 
     @convert("pickle")
     def to_pickle(self) -> None:
+        print("Converting the DataFrame to a pickle file ...")
         return
 
     @convert("csv")
     def to_csv(self) -> None:
+        print("Converting the DataFrame to a csv file ...")
         return
