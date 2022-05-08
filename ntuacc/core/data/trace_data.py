@@ -25,4 +25,15 @@ class TraceData(SalaryData):
 
     def extract_data(self) -> str:
         soup = self.download_soup()
-        return soup.findAll("tr")[-1].text.strip()
+        table_tags = soup.findAll("tr")[-1].text.strip()
+
+        if "退件" in table_tags:
+            return_docs_info = table_tags.split("\n")
+            return return_docs_info[-1].strip()
+
+        date = re.search("\d+", table_tags).group()
+
+        if len(date) < 8:
+            return "尚未入帳"
+
+        return date
