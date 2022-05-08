@@ -7,9 +7,18 @@ from ...store import session_store, HEADERS
 
 @dataclass
 class TraceData(SalaryData):
+    """
+    The TraceData object downloads the trace info from the given `project_id`
+    """
+
     project_id: str
 
-    def download_soup(self):
+    def download_soup(self) -> BeautifulSoup:
+        """The download_soup method downloads the html tree.
+
+        Returns:
+            a BeautifulSoup object
+        """
         session = session_store["session"]
 
         if not session:
@@ -24,6 +33,11 @@ class TraceData(SalaryData):
         return BeautifulSoup(html_body.text, "lxml")
 
     def extract_data(self) -> str:
+        """The extract_data method extracts data from the BeautifulSoup object.
+
+        Returns:
+            a str
+        """
         soup = self.download_soup()
         table_tags = soup.findAll("tr")[-1].text.strip()
 
