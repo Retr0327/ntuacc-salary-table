@@ -32,7 +32,7 @@ class NTUACC:
         if not self.is_logged_in:
             return self.is_logged_in
 
-        return SalaryTable(self.project_year).extract_data()
+        return SalaryTable(self.project_year).download()
 
     @convert("pickle")
     def to_pickle(self) -> None:
