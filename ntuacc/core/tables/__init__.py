@@ -1,3 +1,3 @@
-from .project_table import ProjectTable
+from .salary_table import SalaryTable
 
-__all__ = ["ProjectTable"]
+__all__ = ["SalaryTable"]

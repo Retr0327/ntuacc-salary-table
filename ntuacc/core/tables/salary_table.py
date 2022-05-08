@@ -1,9 +1,9 @@
 import pandas as pd
 from typing import Union
-from .data import TraceData
-from .tables import ProjectTable
+from ..data import TraceData
 from dataclasses import dataclass
-from ..util import set_project_year
+from ...util import set_project_year
+from .project_table import ProjectTable
 from concurrent.futures import ThreadPoolExecutor
 
 
