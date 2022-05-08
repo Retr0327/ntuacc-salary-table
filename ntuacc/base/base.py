@@ -7,6 +7,8 @@ class SalaryData(ABC):
     The SalaryData object extracts the data from html table tags.
     """
 
+    __slots__ = ()
+
     @abstractmethod
     def download_soup(self) -> BeautifulSoup:
         pass
@@ -21,6 +23,8 @@ class Table(ABC):
     """
     The Table object builds a pandas DataFrame based on the given html table tags.
     """
+
+    __slots__ = ()
 
     @abstractmethod
     def download_tabel_tags(self):
