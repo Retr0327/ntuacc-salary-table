@@ -1,5 +1,5 @@
-from .util import convert
 from .core import SalaryTable
+from .util import login, convert
 from pydantic import StrictStr, StrictInt
 from pydantic.dataclasses import dataclass
 
@@ -16,7 +16,7 @@ class NTUACC:
     project_year: StrictInt
 
     def __post_init__(self):
-        self.query = {
+        self.__query = {
             "campno": "m",
             "idtype": "3",
             "bossid": self.bossid.strip(),
@@ -24,9 +24,15 @@ class NTUACC:
             "asspwd": self.asspwd.strip(),
         }
 
+        self.is_logged_in = login(self.__query)
+
     def download_table(self) -> SalaryTable:
         """The download_table method downloads the salary table."""
-        return SalaryTable(self.query, self.project_year).extract_data()
+
+        if not self.is_logged_in:
+            return self.is_logged_in
+
+        return SalaryTable(self.project_year).extract_data()
 
     @convert("pickle")
     def to_pickle(self) -> None:
