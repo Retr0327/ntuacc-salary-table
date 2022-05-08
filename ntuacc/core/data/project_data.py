@@ -7,9 +7,19 @@ from ...store import session_store, HEADERS
 
 @dataclass
 class ProjectData(SalaryData):
+    """
+    The ProjectData object extracts data from html based on the argument `project_year`.
+    """
+
     project_year: int
 
-    def download_soup(self):
+    def download_soup(self) -> BeautifulSoup:
+        """The download_soup method downloads the html tree.
+
+        Returns:
+            a BeautifulSoup object
+        """
+
         session = session_store["session"]
 
         if not session:
@@ -25,6 +35,11 @@ class ProjectData(SalaryData):
         return BeautifulSoup(html_body.text, "lxml")
 
     def extract_data(self) -> Union[str, ResultSet]:
+        """The extract_data method extracts data from the BeautifulSoup object.
+
+        Returns:
+            a str if there is no data, a ResultSet otherwise.
+        """
         soup = self.download_soup()
         table_tags = soup.find_all("table", {"border": "1"})
 
