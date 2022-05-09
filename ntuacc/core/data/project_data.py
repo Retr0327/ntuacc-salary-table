@@ -1,8 +1,8 @@
 from typing import Union
-from ...base import SalaryData
+from ..base import SalaryData
 from dataclasses import dataclass
 from bs4 import BeautifulSoup, ResultSet
-from ...store import session_store, HEADERS
+from ..store import session_store, HEADERS
 
 
 @dataclass

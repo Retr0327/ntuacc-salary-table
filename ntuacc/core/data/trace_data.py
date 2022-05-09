@@ -1,8 +1,8 @@
 import re
 from bs4 import BeautifulSoup
-from ...base import SalaryData
+from ..base import SalaryData
 from dataclasses import dataclass
-from ...store import session_store, HEADERS
+from ..store import session_store, HEADERS
 
 
 @dataclass
