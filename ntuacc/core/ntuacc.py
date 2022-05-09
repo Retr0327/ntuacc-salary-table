@@ -1,5 +1,5 @@
 from .tables import SalaryTable
-from ..util import login, convert
+from .utils import login, convert
 from pydantic import StrictStr, StrictInt
 from pydantic.dataclasses import dataclass
 
