@@ -18,12 +18,13 @@ if parser.get("subcmd") == "show":
     assid = parser["assid"]
     asspwd = parser["asspwd"]
     project_year = parser["year"]
+    convert_type = parser["to"]
 
-    print(
-        tabulate(
-            NTUACC(bossid, assid, asspwd, project_year).download_table(),
-            headers="keys",
-            tablefmt="psql",
-        )
-    )
+    ntuacc = NTUACC(bossid, assid, asspwd, project_year)
 
+    print(tabulate(ntuacc.download_table(), headers="keys", tablefmt="psql"))
+
+    if convert_type == "csv":
+        ntuacc.to_csv()
+    if convert_type == "pickle":
+        ntuacc.to_pickle()
