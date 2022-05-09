@@ -31,6 +31,7 @@ class NTUACCParser:
         show.add_argument(
             "--year", "-Y", type=int, required=True, help="Int for project year"
         )
+        show.add_argument("--to", "-T", type=str, help="Text for convert type")
 
     def parse_args(self):
         return self.parser.parse_args()
