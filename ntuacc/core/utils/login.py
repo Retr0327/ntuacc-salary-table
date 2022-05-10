@@ -1,5 +1,16 @@
 import requests
+from bs4 import BeautifulSoup
 from ..store import HEADERS, session_store
+
+
+def get_login_content(response: requests.Response) -> BeautifulSoup:
+    """The get_login_content function returns the content from the given `response`
+
+    Returns:
+        a BeautifulSoup object
+    """
+    response.encoding = "big5"
+    return BeautifulSoup(response.text, "lxml")
 
 
 def login(payload: dict) -> bool:
@@ -24,6 +35,11 @@ def login(payload: dict) -> bool:
         if status != requests.codes.ok:
             raise requests.HTTPError
 
+        content = get_login_content(response).text
+
+        if "錯誤" in content:
+            raise Exception()
+
         session_store["session"] = session
 
         if not session_store["session"]:
@@ -34,5 +50,8 @@ def login(payload: dict) -> bool:
     except requests.ConnectionError as error:
         print("Connection error. Make sure you are connected to Internet.")
 
-    except requests.HTTPError:
+    except requests.HTTPError as error:
         print("Cannot request!")
+
+    except Exception as error:
+        print("Wrong ID or password!")
