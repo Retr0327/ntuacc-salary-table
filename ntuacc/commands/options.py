@@ -2,6 +2,10 @@ import argparse
 
 
 class NTUACCParser:
+    """
+    The NTUACCParser object handles both optional and positional arguments.
+    """
+
     def __init__(self) -> None:
         self.parser = argparse.ArgumentParser(
             prog="NTUACC Salary Table", description="Manage NTUACC salary table log"
@@ -11,27 +15,19 @@ class NTUACCParser:
             dest="subcmd", help="description", metavar="Actions", required=True
         )
 
+        self.add_login()
         self.add_show()
 
-    def add_show(self):
+    def add_login(self) -> None:
+        """The add_login method adds the `login` command."""
+        self.subparser.add_parser("login", help="Login NTUACC")
+
+    def add_show(self) -> None:
+        """The add_show method adds the `show` command."""
         show = self.subparser.add_parser("show", help="Show salary table")
-        show.add_argument(
-            "--bossid", "-B", type=str, required=True, help="Text for boss id"
-        )
-        show.add_argument(
-            "--assid", "-AID", type=str, required=True, help="Text for assistant id"
-        )
-        show.add_argument(
-            "--asspwd",
-            "-AP",
-            type=str,
-            required=True,
-            help="Text for assistant password",
-        )
         show.add_argument(
             "--year", "-Y", type=int, required=True, help="Int for project year"
         )
-        show.add_argument("--to", "-T", type=str, help="Text for convert type")
 
     def parse_args(self):
         return self.parser.parse_args()
